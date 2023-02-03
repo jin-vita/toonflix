@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
+
+  // Future<List<WebtoonModel>> webtoons = ApiService().getToons();
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +23,15 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
+      // body: FutureBuilder(
+      //   future: webtoons,
+      //   builder: (context, snapshot) {
+      //     if (snapshot.hasData) {
+      //       return const Text('there is data!');
+      //     }
+      //     return const Text('loading...');
+      //   },
+      // ),
     );
   }
 }

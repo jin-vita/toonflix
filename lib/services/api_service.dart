@@ -1,3 +1,8 @@
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+import 'package:toonflix/models/webtoon_model.dart';
+
 /// 네이버 웹툰 Unofficial API
 /// /today: Returns today's comics (kids friendly).
 /// /:id: Returns a comic's information by `:id`
@@ -5,4 +10,21 @@
 class ApiService {
   final String baseUrl = 'https://webtoon-crawler.nomadcoders.workers.dev';
   final String today = 'today';
+
+  Future<List<WebtoonModel>> getToons() async {
+    List<WebtoonModel> webtoonInstances = [];
+    final url = Uri.parse('$baseUrl/$today');
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      final List<dynamic> webtoons = jsonDecode(response.body);
+
+      for (var webtoon in webtoons) {
+        final toon = WebtoonModel.fromJson(webtoon);
+        webtoonInstances.add(toon);
+      }
+
+      return webtoonInstances;
+    }
+    throw Error();
+  }
 }
