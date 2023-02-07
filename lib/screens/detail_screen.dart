@@ -38,10 +38,59 @@ class _DetailScreenState extends State<DetailScreen> {
           const SizedBox(
             height: 30,
           ),
-          Container(
-            alignment: Alignment.center,
-            child: ThumbCard(webtoon: widget.webtoon),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ThumbCard(webtoon: widget.webtoon),
+            ],
           ),
+          const SizedBox(
+            height: 20,
+          ),
+          FutureBuilder(
+            future: webtoons,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 50,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text('${snapshot.data!.age}  |  ${snapshot.data!.genre}'),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        snapshot.data!.about,
+                        style: const TextStyle(
+                          fontSize: 17,
+                        ),
+                      ),
+                      FutureBuilder(
+                        future: episodes,
+                        builder: (context, epi) {
+                          if (epi.hasData) {
+                            return Text(epi.data!.first.title);
+                          }
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                );
+              }
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+          )
         ],
       ),
     );
