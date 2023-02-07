@@ -6,6 +6,7 @@ import 'package:toonflix/widgets/webtoon_appbar.dart';
 
 import '../models/webtoon_model.dart';
 import '../services/api_service.dart';
+import '../widgets/episode.dart';
 
 class DetailScreen extends StatefulWidget {
   const DetailScreen({
@@ -88,37 +89,9 @@ class _DetailScreenState extends State<DetailScreen> {
                     return Column(
                       children: [
                         for (var episode in snapshot.data!)
-                          Container(
-                            margin: const EdgeInsets.only(
-                              bottom: 10,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade400,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 10,
-                                horizontal: 20,
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    episode.title,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 17,
-                                    ),
-                                  ),
-                                  const Icon(
-                                    Icons.chevron_right_rounded,
-                                    color: Colors.white,
-                                  ),
-                                ],
-                              ),
-                            ),
+                          Episode(
+                            episode: episode,
+                            webtoonId: widget.webtoon.id,
                           ),
                       ],
                     );
